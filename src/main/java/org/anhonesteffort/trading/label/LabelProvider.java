@@ -35,16 +35,19 @@ public abstract class LabelProvider {
 
   public static Optional<LabelProvider> parseFrom(String string) {
     String[] parts = string.split(":");
-    if (parts[0].equals("time-diff")) {
-      return Optional.of(new TimeDiffLabelProvider());
-    } else if (parts[0].equals("take-volume")) {
-      if (parts[1].equals("ask")) {
-        return Optional.of(new TakeVolumeLabelProvider(Order.Side.ASK, Long.parseLong(parts[2])));
-      } else {
-        return Optional.of(new TakeVolumeLabelProvider(Order.Side.BID, Long.parseLong(parts[2])));
-      }
-    } else {
-      return Optional.empty();
+    switch (parts[0]) {
+      case "time-diff":
+        return Optional.of(new TimeDiffLabelProvider());
+
+      case "take-volume":
+        if (parts[1].equals("ask")) {
+          return Optional.of(new TakeVolumeLabelProvider(Order.Side.ASK, Long.parseLong(parts[2])));
+        } else {
+          return Optional.of(new TakeVolumeLabelProvider(Order.Side.BID, Long.parseLong(parts[2])));
+        }
+
+        default:
+          return Optional.empty();
     }
   }
 

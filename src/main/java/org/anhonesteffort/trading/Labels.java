@@ -40,7 +40,7 @@ public class Labels {
 
   public void run() throws Exception {
     List<LabelProvider> labels =
-        Arrays.asList(labelArgs).stream()
+        Arrays.stream(labelArgs)
         .map(LabelProvider::parseFrom)
         .filter(Optional::isPresent)
         .map(Optional::get)
