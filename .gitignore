@@ -1,0 +1,7 @@
+notes.txt
+
+build/
+.gradle/
+
+.idea/
+*.iml
