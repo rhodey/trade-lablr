@@ -22,7 +22,7 @@ import org.anhonesteffort.trading.proto.OrderEvent;
 public class TimeDiffLabelProvider extends LabelProvider {
 
   public TimeDiffLabelProvider() {
-    super("time-diff-ns");
+    super("time_diff_ns");
   }
 
   @Override

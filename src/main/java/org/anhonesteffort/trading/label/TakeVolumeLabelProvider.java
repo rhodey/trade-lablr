@@ -26,7 +26,7 @@ public class TakeVolumeLabelProvider extends LabelProvider {
   private final long periodMs;
 
   public TakeVolumeLabelProvider(Order.Side side, long periodMs) {
-    super("take-volume-" + side.name() + "-" + periodMs);
+    super("take_volume_" + side.name() + "_" + periodMs);
     this.side     = side;
     this.periodMs = periodMs;
   }
@@ -41,8 +41,14 @@ public class TakeVolumeLabelProvider extends LabelProvider {
     long sum   = 0l;
     int  index = eventIndex;
 
-    while (index < times.length && (times[index] - times[eventIndex]) < periodMs) {
-      sum += valueHistory[index++];
+    if (periodMs > 0) {
+      while (index < times.length && (times[index] - times[eventIndex]) < periodMs) {
+        sum += valueHistory[index++];
+      }
+    } else {
+      while (index >= 0 && (times[eventIndex] - times[index]) < Math.abs(periodMs)) {
+        sum += valueHistory[index--];
+      }
     }
 
     return sum;

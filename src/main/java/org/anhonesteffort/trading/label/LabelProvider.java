@@ -36,10 +36,10 @@ public abstract class LabelProvider {
   public static Optional<LabelProvider> parseFrom(String string) {
     String[] parts = string.split(":");
     switch (parts[0]) {
-      case "time-diff":
+      case "time_diff":
         return Optional.of(new TimeDiffLabelProvider());
 
-      case "take-volume":
+      case "take_volume":
         if (parts[1].equals("ask")) {
           return Optional.of(new TakeVolumeLabelProvider(Order.Side.ASK, Long.parseLong(parts[2])));
         } else {
