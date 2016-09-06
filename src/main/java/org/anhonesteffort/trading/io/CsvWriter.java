@@ -17,43 +17,66 @@
 
 package org.anhonesteffort.trading.io;
 
+import org.anhonesteffort.trading.label.LabelProvider;
 import org.anhonesteffort.trading.proto.Label;
 import org.anhonesteffort.trading.proto.OrderEvent;
-import org.anhonesteffort.trading.proto.TradingProtoFactory;
 
 import java.io.Closeable;
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.List;
 
-public class ProtoWriter implements Closeable {
+public class CsvWriter implements Closeable {
 
-  private final TradingProtoFactory proto = new TradingProtoFactory();
-  private final File file;
-  private final OutputStream output;
+  private final FileWriter output;
 
-  public ProtoWriter(File file) throws IOException{
-    this.file = file;
+  public CsvWriter(File file) throws IOException{
     if (file.exists()) {
       if (!file.delete() || !file.createNewFile()) {
         throw new IOException("failed to replace existing output file " + file.getName());
       }
     }
-    output = new FileOutputStream(file);
+    output = new FileWriter(file);
   }
 
-  public File getFile() {
-    return file;
-  }
+  public void writeHeader(List<LabelProvider> labelers) throws IOException {
+    StringBuilder builder = new StringBuilder();
 
-  public void writeEvent(OrderEvent event) throws IOException {
-    proto.orderEvent(event).writeDelimitedTo(output);
+    builder.append("type,timeMs,timeNs,orderId,side,price,size");
+    labelers.forEach(label -> {
+      builder.append(",");
+      builder.append(label.getName());
+    });
+
+    builder.append("\n");
+    output.write(builder.toString());
   }
 
   public void writeLabeledEvent(OrderEvent event, List<Label> labels) throws IOException {
-    proto.labeledOrderEvent(event, labels).writeDelimitedTo(output);
+    StringBuilder builder = new StringBuilder();
+
+    builder.append(event.getType().name());
+    builder.append(",");
+    builder.append(event.getTimeMs());
+    builder.append(",");
+    builder.append(event.getTimeNs());
+    builder.append(",");
+    builder.append(event.getOrderId());
+    builder.append(",");
+    builder.append(event.getSide().name());
+    builder.append(",");
+    builder.append(event.getPrice());
+    builder.append(",");
+    builder.append(event.getSize());
+
+    labels.forEach(label -> {
+      builder.append(",");
+      builder.append(label.getValue());
+    });
+
+    builder.append("\n");
+    output.write(builder.toString());
   }
 
   @Override

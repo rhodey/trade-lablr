@@ -22,6 +22,7 @@ the naming convention of:
 ```
 events-<year>-<month>-<day>.<hour>:<minute>.<duration-minutes>.protos
 events-<year>-<month>-<day>.<hour>:<minute>.<duration-minutes>.protos.labeled
+events-<year>-<month>-<day>.<hour>:<minute>.<duration-minutes>.protos.labeled.csv
 ```
 
 Where `.protos` files contain length delimited `OrderEvent` protobuf messages

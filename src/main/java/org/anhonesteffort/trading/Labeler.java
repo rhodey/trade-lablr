@@ -17,6 +17,7 @@
 
 package org.anhonesteffort.trading;
 
+import org.anhonesteffort.trading.io.CsvWriter;
 import org.anhonesteffort.trading.io.ProtoReader;
 import org.anhonesteffort.trading.io.ProtoWriter;
 import org.anhonesteffort.trading.label.LabelProvider;
@@ -26,20 +27,23 @@ import org.anhonesteffort.trading.proto.OrderEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.Callable;
 
-public class ProtoLabeler implements Callable<File> {
+public class Labeler implements Callable<Integer> {
 
   private final File input;
-  private final File output;
+  private final File outputProto;
+  private final File outputCsv;
   private final List<LabelProvider> labelers;
 
-  public ProtoLabeler(File input, List<LabelProvider> labelers) {
+  public Labeler(File input, List<LabelProvider> labelers) {
     this.input    = input;
     this.labelers = labelers;
-    output        = new File(input.getAbsolutePath() + ".labeled");
+    outputProto   = new File(input.getAbsolutePath() + ".labeled");
+    outputCsv     = new File(input.getAbsolutePath() + ".labeled.csv");
   }
 
   private void count(ProtoReader reader) throws IOException {
@@ -65,21 +69,27 @@ public class ProtoLabeler implements Callable<File> {
     }
   }
 
-  private void label(ProtoReader reader, ProtoWriter writer) throws IOException {
+  private int label(ProtoReader reader, ProtoWriter protoWriter, CsvWriter csvWriter) throws IOException {
     int eventIndex = 0;
+    List<Label> labels = new LinkedList<>();
     Optional<OrderEvent> event = reader.readNext();
 
+    csvWriter.writeHeader(labelers);
+
     while (event.isPresent()) {
-      Label[] labels = new Label[labelers.size()];
-      for (int i = 0; i < labels.length; i++) { labels[i] = labelers.get(i).labelFor(eventIndex); }
-      writer.writeLabeledEvent(event.get(), labels);
+      for (LabelProvider labeler : labelers) { labels.add(labeler.labelFor(eventIndex)); }
+      protoWriter.writeLabeledEvent(event.get(), labels);
+      csvWriter.writeLabeledEvent(event.get(), labels);
       eventIndex++;
+      labels.clear();
       event = reader.readNext();
     }
+
+    return eventIndex;
   }
 
   @Override
-  public File call() throws IOException {
+  public Integer call() throws IOException {
     try (ProtoReader reader = new ProtoReader(new FileInputStream(input))) {
       count(reader);
     }
@@ -88,13 +98,12 @@ public class ProtoLabeler implements Callable<File> {
       index(reader);
     }
 
-    try (ProtoReader reader = new ProtoReader(new FileInputStream(input));
-         ProtoWriter writer = new ProtoWriter(output))
+    try (ProtoReader reader      = new ProtoReader(new FileInputStream(input));
+         ProtoWriter protoWriter = new ProtoWriter(outputProto);
+         CsvWriter   csvWriter   = new CsvWriter(outputCsv))
     {
-      label(reader, writer);
+      return label(reader, protoWriter, csvWriter);
     }
-
-    return output;
   }
 
 }

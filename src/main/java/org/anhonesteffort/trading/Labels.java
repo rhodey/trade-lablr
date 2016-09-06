@@ -54,7 +54,7 @@ public class Labels {
       System.out.println("labeling protobufs...");
       for (int i = 0; i < slices.size(); i++) {
         System.out.println("labeling slice #" + (i + 1) + "...");
-        pool.submit(new ProtoLabeler(slices.get(i), labels)).get();
+        pool.submit(new Labeler(slices.get(i), labels)).get();
       }
 
     } finally {
