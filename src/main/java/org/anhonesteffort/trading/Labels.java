@@ -18,7 +18,6 @@
 package org.anhonesteffort.trading;
 
 import org.anhonesteffort.trading.io.ChronicleProtoSlicer;
-import org.anhonesteffort.trading.io.ProtoLabeler;
 import org.anhonesteffort.trading.label.LabelProvider;
 
 import java.io.File;

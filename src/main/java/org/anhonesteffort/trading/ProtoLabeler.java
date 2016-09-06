@@ -15,8 +15,10 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package org.anhonesteffort.trading.io;
+package org.anhonesteffort.trading;
 
+import org.anhonesteffort.trading.io.ProtoReader;
+import org.anhonesteffort.trading.io.ProtoWriter;
 import org.anhonesteffort.trading.label.LabelProvider;
 import org.anhonesteffort.trading.proto.Label;
 import org.anhonesteffort.trading.proto.OrderEvent;
