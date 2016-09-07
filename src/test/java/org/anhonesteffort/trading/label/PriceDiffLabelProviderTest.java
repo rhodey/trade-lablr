@@ -49,22 +49,22 @@ public class PriceDiffLabelProviderTest {
     assert LABELER.labelFor(4).getValue() == -1l;
   }
 
-  /*@Test
+  @Test
   public void test2() {
     final LabelProvider LABELER = new PriceDiffLabelProvider(-10l);
 
     LABELER.initEventCount(5);
-    LABELER.indexEvent(0, mockTake(0l,   1l));
-    LABELER.indexEvent(1, mockOpen(25l,  13l));
-    LABELER.indexEvent(2, mockTake(30l,  133l));
+    LABELER.indexEvent(0, mockTake(0l,      1l));
+    LABELER.indexEvent(1, mockOpen(25l,    13l));
+    LABELER.indexEvent(2, mockTake(30l,   133l));
     LABELER.indexEvent(3, mockTake(39l,  1337l));
     LABELER.indexEvent(4, mockTake(49l, 31337l));
 
-    assert LABELER.labelFor(0).getValue() == 1l;
-    assert LABELER.labelFor(1).getValue() == -1l;
-    assert LABELER.labelFor(2).getValue() == 133l;
-    assert LABELER.labelFor(3).getValue() == 133l;
-    assert LABELER.labelFor(4).getValue() == 31337l;
-  }*/
+    assert LABELER.labelFor(0).getValue() ==   -1l;
+    assert LABELER.labelFor(1).getValue() ==   -1l;
+    assert LABELER.labelFor(2).getValue() ==   -1l;
+    assert LABELER.labelFor(3).getValue() == 1204l;
+    assert LABELER.labelFor(4).getValue() ==   -1l;
+  }
 
 }
