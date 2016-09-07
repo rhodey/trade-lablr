@@ -73,10 +73,15 @@ public abstract class LabelProvider {
     valueHistory[eventIndex] = historicValueFor(event);
   }
 
-  protected abstract long labelValueFor(int eventIndex);
+  protected abstract Optional<Long> labelValueFor(int eventIndex);
 
-  public Label labelFor(int eventIndex) {
-    return new Label(name, labelValueFor(eventIndex));
+  public Optional<Label> labelFor(int eventIndex) {
+    Optional<Long> value = labelValueFor(eventIndex);
+    if (value.isPresent()) {
+      return Optional.of(new Label(name, value.get()));
+    } else {
+      return Optional.empty();
+    }
   }
 
 }

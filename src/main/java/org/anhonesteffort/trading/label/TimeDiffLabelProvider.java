@@ -19,6 +19,8 @@ package org.anhonesteffort.trading.label;
 
 import org.anhonesteffort.trading.proto.OrderEvent;
 
+import java.util.Optional;
+
 public class TimeDiffLabelProvider extends LabelProvider {
 
   public TimeDiffLabelProvider() {
@@ -31,11 +33,11 @@ public class TimeDiffLabelProvider extends LabelProvider {
   }
 
   @Override
-  public long labelValueFor(int eventIndex) {
+  public Optional<Long> labelValueFor(int eventIndex) {
     if (eventIndex == 0) {
-      return 0l;
+      return Optional.of(0l);
     } else {
-      return valueHistory[eventIndex] - valueHistory[eventIndex - 1];
+      return Optional.of(valueHistory[eventIndex] - valueHistory[eventIndex - 1]);
     }
   }
 

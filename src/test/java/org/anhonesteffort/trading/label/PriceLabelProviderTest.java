@@ -42,11 +42,11 @@ public class PriceLabelProviderTest {
     LABELER.indexEvent(3, mockTake(75l,   1337l));
     LABELER.indexEvent(4, mockTake(100l, 31337l));
 
-    assert LABELER.labelFor(0).getValue() ==  1337l;
-    assert LABELER.labelFor(1).getValue() == 31337l;
-    assert LABELER.labelFor(2).getValue() == 31337l;
-    assert LABELER.labelFor(3).getValue() == 31337l;
-    assert LABELER.labelFor(4).getValue() == 31337l;
+    assert LABELER.labelFor(0).get().getValue() ==  1337l;
+    assert LABELER.labelFor(1).get().getValue() == 31337l;
+    assert LABELER.labelFor(2).get().getValue() == 31337l;
+    assert LABELER.labelFor(3).get().getValue() == 31337l;
+    assert LABELER.labelFor(4).get().getValue() == 31337l;
   }
 
   @Test
@@ -60,11 +60,11 @@ public class PriceLabelProviderTest {
     LABELER.indexEvent(3, mockTake(39l,  1337l));
     LABELER.indexEvent(4, mockTake(49l, 31337l));
 
-    assert LABELER.labelFor(0).getValue() ==     1l;
-    assert LABELER.labelFor(1).getValue() ==    -1l;
-    assert LABELER.labelFor(2).getValue() ==   133l;
-    assert LABELER.labelFor(3).getValue() ==   133l;
-    assert LABELER.labelFor(4).getValue() == 31337l;
+    assert LABELER.labelFor(0).get().getValue() ==     1l;
+    assert !LABELER.labelFor(1).isPresent();
+    assert LABELER.labelFor(2).get().getValue() ==   133l;
+    assert LABELER.labelFor(3).get().getValue() ==   133l;
+    assert LABELER.labelFor(4).get().getValue() == 31337l;
   }
 
 }

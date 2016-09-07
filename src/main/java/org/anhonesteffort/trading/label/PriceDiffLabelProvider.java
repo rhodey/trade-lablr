@@ -19,6 +19,8 @@ package org.anhonesteffort.trading.label;
 
 import org.anhonesteffort.trading.proto.OrderEvent;
 
+import java.util.Optional;
+
 public class PriceDiffLabelProvider extends LabelProvider {
 
   private final long periodMs;
@@ -34,8 +36,8 @@ public class PriceDiffLabelProvider extends LabelProvider {
   }
 
   @Override
-  public long labelValueFor(int eventIndex) {
-    if (valueHistory[eventIndex] <= 0l) { return -1l; }
+  public Optional<Long> labelValueFor(int eventIndex) {
+    if (valueHistory[eventIndex] <= 0l) { return Optional.empty(); }
     long last  = -1l;
     int  index = eventIndex;
 
@@ -45,14 +47,14 @@ public class PriceDiffLabelProvider extends LabelProvider {
         last   = (valueHistory[index] > 0l) ? valueHistory[index] : last;
         index += 1;
       }
-      return (last > 0l) ? (last - valueHistory[eventIndex]) : -1l;
+      return (last > 0l) ? Optional.of(last - valueHistory[eventIndex]) : Optional.empty();
     } else {
       index--;
       while (index >= 0 && (times[eventIndex] - times[index]) < Math.abs(periodMs)) {
         last   = (valueHistory[index] > 0l) ? valueHistory[index] : last;
         index -= 1;
       }
-      return (last > 0l) ? (valueHistory[eventIndex] - last) : -1l;
+      return (last > 0l) ? Optional.of(valueHistory[eventIndex] - last) : Optional.empty();
     }
   }
 

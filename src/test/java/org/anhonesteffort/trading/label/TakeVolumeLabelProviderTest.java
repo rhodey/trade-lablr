@@ -43,12 +43,12 @@ public class TakeVolumeLabelProviderTest {
     LABELER.indexEvent(4, mockTake(100l, 31337l));
     LABELER.indexEvent(5, mockOpen(25l,     13l));
 
-    assert LABELER.labelFor(0).getValue() ==  1471l;
-    assert LABELER.labelFor(1).getValue() == 32807l;
-    assert LABELER.labelFor(2).getValue() == 32807l;
-    assert LABELER.labelFor(3).getValue() == 32674l;
-    assert LABELER.labelFor(4).getValue() == 31337l;
-    assert LABELER.labelFor(5).getValue() ==     0l;
+    assert LABELER.labelFor(0).get().getValue() ==  1471l;
+    assert LABELER.labelFor(1).get().getValue() == 32807l;
+    assert LABELER.labelFor(2).get().getValue() == 32807l;
+    assert LABELER.labelFor(3).get().getValue() == 32674l;
+    assert LABELER.labelFor(4).get().getValue() == 31337l;
+    assert LABELER.labelFor(5).get().getValue() ==     0l;
   }
 
   @Test
@@ -62,11 +62,11 @@ public class TakeVolumeLabelProviderTest {
     LABELER.indexEvent(3, mockTake(39l,  1337l));
     LABELER.indexEvent(4, mockTake(49l, 31337l));
 
-    assert LABELER.labelFor(0).getValue() ==     1l;
-    assert LABELER.labelFor(1).getValue() ==     0l;
-    assert LABELER.labelFor(2).getValue() ==   133l;
-    assert LABELER.labelFor(3).getValue() ==  1470l;
-    assert LABELER.labelFor(4).getValue() == 31337l;
+    assert LABELER.labelFor(0).get().getValue() ==     1l;
+    assert LABELER.labelFor(1).get().getValue() ==     0l;
+    assert LABELER.labelFor(2).get().getValue() ==   133l;
+    assert LABELER.labelFor(3).get().getValue() ==  1470l;
+    assert LABELER.labelFor(4).get().getValue() == 31337l;
   }
 
 }

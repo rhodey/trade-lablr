@@ -20,6 +20,8 @@ package org.anhonesteffort.trading.label;
 import org.anhonesteffort.trading.book.Order;
 import org.anhonesteffort.trading.proto.OrderEvent;
 
+import java.util.Optional;
+
 public class TakeVolumeLabelProvider extends LabelProvider {
 
   private final Order.Side side;
@@ -37,7 +39,7 @@ public class TakeVolumeLabelProvider extends LabelProvider {
   }
 
   @Override
-  public long labelValueFor(int eventIndex) {
+  public Optional<Long> labelValueFor(int eventIndex) {
     long sum   = 0l;
     int  index = eventIndex;
 
@@ -51,7 +53,7 @@ public class TakeVolumeLabelProvider extends LabelProvider {
       }
     }
 
-    return sum;
+    return Optional.of(sum);
   }
 
 }

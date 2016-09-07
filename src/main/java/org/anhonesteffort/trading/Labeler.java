@@ -77,7 +77,7 @@ public class Labeler implements Callable<Integer> {
     csvWriter.writeHeader(labelers);
 
     while (event.isPresent()) {
-      for (LabelProvider labeler : labelers) { labels.add(labeler.labelFor(eventIndex)); }
+      for (LabelProvider labeler : labelers) { labels.add(labeler.labelFor(eventIndex).get()); }
       protoWriter.writeLabeledEvent(event.get(), labels);
       csvWriter.writeLabeledEvent(event.get(), labels);
       eventIndex++;

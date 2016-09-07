@@ -30,9 +30,9 @@ public class TimeDiffLabelProviderTest {
     LABELER.initEventCount(10);
     IntStream.range(0, 10).forEach(i -> LABELER.indexEvent(i, OrderEvent.syncStart(i * 100)));
 
-    assert LABELER.labelFor(0).getValue() == 0l;
+    assert LABELER.labelFor(0).get().getValue() == 0l;
     IntStream.range(1, 10).forEach(i -> {
-      assert LABELER.labelFor(i).getValue() == 100l;
+      assert LABELER.labelFor(i).get().getValue() == 100l;
     });
   }
 
