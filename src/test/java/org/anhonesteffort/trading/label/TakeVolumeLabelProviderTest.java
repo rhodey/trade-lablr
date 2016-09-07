@@ -35,23 +35,25 @@ public class TakeVolumeLabelProviderTest {
   public void testFuture() {
     final LabelProvider LABELER = new TakeVolumeLabelProvider(Order.Side.ASK, 100l);
 
-    LABELER.initEventCount(5);
+    LABELER.initEventCount(6);
     LABELER.indexEvent(0, mockTake(0l,       1l));
     LABELER.indexEvent(1, mockOpen(25l,     13l));
     LABELER.indexEvent(2, mockTake(50l,    133l));
     LABELER.indexEvent(3, mockTake(75l,   1337l));
     LABELER.indexEvent(4, mockTake(100l, 31337l));
+    LABELER.indexEvent(5, mockOpen(25l,     13l));
 
     assert LABELER.labelFor(0).getValue() ==  1471l;
     assert LABELER.labelFor(1).getValue() == 32807l;
     assert LABELER.labelFor(2).getValue() == 32807l;
     assert LABELER.labelFor(3).getValue() == 32674l;
     assert LABELER.labelFor(4).getValue() == 31337l;
+    assert LABELER.labelFor(5).getValue() ==     0l;
   }
 
-  /*@Test
+  @Test
   public void testPast() {
-    final LabelProvider LABELER = new PriceDiffLabelProvider(-10l);
+    final LabelProvider LABELER = new TakeVolumeLabelProvider(Order.Side.ASK, -10l);
 
     LABELER.initEventCount(5);
     LABELER.indexEvent(0, mockTake(0l,      1l));
@@ -60,11 +62,11 @@ public class TakeVolumeLabelProviderTest {
     LABELER.indexEvent(3, mockTake(39l,  1337l));
     LABELER.indexEvent(4, mockTake(49l, 31337l));
 
-    assert LABELER.labelFor(0).getValue() ==   -1l;
-    assert LABELER.labelFor(1).getValue() ==   -1l;
-    assert LABELER.labelFor(2).getValue() ==   -1l;
-    assert LABELER.labelFor(3).getValue() == 1204l;
-    assert LABELER.labelFor(4).getValue() ==   -1l;
-  }*/
+    assert LABELER.labelFor(0).getValue() ==     1l;
+    assert LABELER.labelFor(1).getValue() ==     0l;
+    assert LABELER.labelFor(2).getValue() ==   133l;
+    assert LABELER.labelFor(3).getValue() ==  1470l;
+    assert LABELER.labelFor(4).getValue() == 31337l;
+  }
 
 }
