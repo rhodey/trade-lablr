@@ -42,6 +42,9 @@ public abstract class LabelProvider {
       case "price":
         return Optional.of(new PriceLabelProvider(Long.parseLong(parts[1])));
 
+      case "price_diff":
+        return Optional.of(new PriceDiffLabelProvider(Long.parseLong(parts[1])));
+
       case "take_volume":
         if (parts[1].equals("ask")) {
           return Optional.of(new TakeVolumeLabelProvider(Order.Side.ASK, Long.parseLong(parts[2])));
