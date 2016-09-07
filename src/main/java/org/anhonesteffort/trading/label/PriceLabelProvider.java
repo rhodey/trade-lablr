@@ -30,7 +30,7 @@ public class PriceLabelProvider extends LabelProvider {
 
   @Override
   protected long historicValueFor(OrderEvent event) {
-    return event.getType().equals(OrderEvent.Type.TAKE) ? event.getSize() : -1l;
+    return event.getType().equals(OrderEvent.Type.TAKE) ? event.getPrice() : -1l;
   }
 
   @Override
