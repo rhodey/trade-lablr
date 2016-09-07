@@ -36,17 +36,17 @@ public class PriceDiffLabelProviderTest {
     final LabelProvider LABELER = new PriceDiffLabelProvider(100l);
 
     LABELER.initEventCount(5);
-    LABELER.indexEvent(0, mockTake(0l,   1l));
-    LABELER.indexEvent(1, mockOpen(25l,  13l));
-    LABELER.indexEvent(2, mockTake(50l,  133l));
-    LABELER.indexEvent(3, mockTake(75l,  1337l));
+    LABELER.indexEvent(0, mockTake(0l,       1l));
+    LABELER.indexEvent(1, mockOpen(25l,     13l));
+    LABELER.indexEvent(2, mockTake(50l,    133l));
+    LABELER.indexEvent(3, mockTake(75l,   1337l));
     LABELER.indexEvent(4, mockTake(100l, 31337l));
 
-    assert LABELER.labelFor(0).getValue() == 1336l;
-    assert LABELER.labelFor(1).getValue() == -1l;
+    assert LABELER.labelFor(0).getValue() ==  1336l;
+    assert LABELER.labelFor(1).getValue() ==    -1l;
     assert LABELER.labelFor(2).getValue() == 31204l;
     assert LABELER.labelFor(3).getValue() == 30000l;
-    assert LABELER.labelFor(4).getValue() == -1l;
+    assert LABELER.labelFor(4).getValue() ==    -1l;
   }
 
   @Test

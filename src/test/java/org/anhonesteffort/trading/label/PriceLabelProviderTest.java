@@ -36,13 +36,13 @@ public class PriceLabelProviderTest {
     final LabelProvider LABELER = new PriceLabelProvider(100l);
 
     LABELER.initEventCount(5);
-    LABELER.indexEvent(0, mockTake(0l,   1l));
-    LABELER.indexEvent(1, mockOpen(25l,  13l));
-    LABELER.indexEvent(2, mockTake(50l,  133l));
-    LABELER.indexEvent(3, mockTake(75l,  1337l));
+    LABELER.indexEvent(0, mockTake(0l,       1l));
+    LABELER.indexEvent(1, mockOpen(25l,     13l));
+    LABELER.indexEvent(2, mockTake(50l,    133l));
+    LABELER.indexEvent(3, mockTake(75l,   1337l));
     LABELER.indexEvent(4, mockTake(100l, 31337l));
 
-    assert LABELER.labelFor(0).getValue() == 1337l;
+    assert LABELER.labelFor(0).getValue() ==  1337l;
     assert LABELER.labelFor(1).getValue() == 31337l;
     assert LABELER.labelFor(2).getValue() == 31337l;
     assert LABELER.labelFor(3).getValue() == 31337l;
@@ -54,16 +54,16 @@ public class PriceLabelProviderTest {
     final LabelProvider LABELER = new PriceLabelProvider(-10l);
 
     LABELER.initEventCount(5);
-    LABELER.indexEvent(0, mockTake(0l,   1l));
-    LABELER.indexEvent(1, mockOpen(25l,  13l));
-    LABELER.indexEvent(2, mockTake(30l,  133l));
+    LABELER.indexEvent(0, mockTake(0l,      1l));
+    LABELER.indexEvent(1, mockOpen(25l,    13l));
+    LABELER.indexEvent(2, mockTake(30l,   133l));
     LABELER.indexEvent(3, mockTake(39l,  1337l));
     LABELER.indexEvent(4, mockTake(49l, 31337l));
 
-    assert LABELER.labelFor(0).getValue() == 1l;
-    assert LABELER.labelFor(1).getValue() == -1l;
-    assert LABELER.labelFor(2).getValue() == 133l;
-    assert LABELER.labelFor(3).getValue() == 133l;
+    assert LABELER.labelFor(0).getValue() ==     1l;
+    assert LABELER.labelFor(1).getValue() ==    -1l;
+    assert LABELER.labelFor(2).getValue() ==   133l;
+    assert LABELER.labelFor(3).getValue() ==   133l;
     assert LABELER.labelFor(4).getValue() == 31337l;
   }
 
