@@ -38,8 +38,8 @@ Use `<label>` argument `time_diff` to label each `OrderEvent` with the
 nanosecond difference in time between this event and the event that preceded
 it.
 
-### Label Take Price
-Use `<label>` argument `take_price:<periodMs>` to label each `OrderEvent` with
+### Label Price
+Use `<label>` argument `price:<periodMs>` to label each `OrderEvent` with
 the last price traded between the time of this event and `<periodMs>`
 milliseconds in the future.
 
@@ -53,7 +53,7 @@ The following command will label each `OrderEvent` in the Chronicle log file
 with total amount of volume bought 10 seconds **in the past**, total volume
 sold 30 seconds **in the future**, and price 30 seconds **in the future**.
 ```
-$ java -jar build/libs/trade-lablr-0.1.jar take_volume:bid:-10000 take_volume:ask:30000 take_price:30000
+$ java -jar build/libs/trade-lablr-0.1.jar take_volume:bid:-10000 take_volume:ask:30000 price:30000
 ```
 
 ## License

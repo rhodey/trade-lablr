@@ -19,12 +19,12 @@ package org.anhonesteffort.trading.label;
 
 import org.anhonesteffort.trading.proto.OrderEvent;
 
-public class TakePriceLabelProvider extends LabelProvider {
+public class PriceLabelProvider extends LabelProvider {
 
   private final long periodMs;
 
-  public TakePriceLabelProvider(long periodMs) {
-    super("take_price_" + periodMs);
+  public PriceLabelProvider(long periodMs) {
+    super("price_" + periodMs);
     this.periodMs = periodMs;
   }
 

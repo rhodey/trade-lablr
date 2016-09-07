@@ -20,6 +20,7 @@ package org.anhonesteffort.trading.io;
 import org.anhonesteffort.trading.label.LabelProvider;
 import org.anhonesteffort.trading.proto.Label;
 import org.anhonesteffort.trading.proto.OrderEvent;
+import org.anhonesteffort.trading.util.LongCaster;
 
 import java.io.Closeable;
 import java.io.File;
@@ -29,6 +30,7 @@ import java.util.List;
 
 public class CsvWriter implements Closeable {
 
+  private final LongCaster caster = new LongCaster(0.000000000001d, 100d);
   private final FileWriter output;
 
   public CsvWriter(File file) throws IOException{
@@ -66,13 +68,13 @@ public class CsvWriter implements Closeable {
     builder.append(",");
     builder.append(event.getSide().name());
     builder.append(",");
-    builder.append(event.getPrice());
+    builder.append(caster.toDouble(event.getPrice()));
     builder.append(",");
-    builder.append(event.getSize());
+    builder.append(caster.toDouble(event.getSize()));
 
     labels.forEach(label -> {
       builder.append(",");
-      builder.append(label.getValue());
+      builder.append(caster.toDouble(label.getValue()));
     });
 
     builder.append("\n");
