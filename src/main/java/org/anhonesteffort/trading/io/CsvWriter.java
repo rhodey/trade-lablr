@@ -74,7 +74,7 @@ public class CsvWriter implements Closeable {
 
     labels.forEach(label -> {
       builder.append(",");
-      builder.append(caster.toDouble(label.getValue()));
+      builder.append(label.getValue() != -1l ? caster.toDouble(label.getValue()) : -1l);
     });
 
     builder.append("\n");
