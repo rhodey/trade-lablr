@@ -43,6 +43,11 @@ Use `<label>` argument `price:<periodMs>` to label each `OrderEvent` with
 the last price traded between the time of this event and `<periodMs>`
 milliseconds in the future.
 
+### Label Price Difference
+Use `<label>` argument `price_diff:<periodMs>` to label each `OrderEvent`
+with the difference in price between this event and the last price traded
+between the time of this event and `<periodMs>` milliseconds in the future.
+
 ### Label Take Volume
 Use `<label>` argument `take_volume:<side>:<periodMs>` to label each
 `OrderEvent` with the total volume removed by `<side>` between the time of this
