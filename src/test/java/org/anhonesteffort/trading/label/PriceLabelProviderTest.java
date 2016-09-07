@@ -32,7 +32,7 @@ public class PriceLabelProviderTest {
   }
 
   @Test
-  public void test1() {
+  public void testFuture() {
     final LabelProvider LABELER = new PriceLabelProvider(100l);
 
     LABELER.initEventCount(5);
@@ -50,7 +50,7 @@ public class PriceLabelProviderTest {
   }
 
   @Test
-  public void test2() {
+  public void testPast() {
     final LabelProvider LABELER = new PriceLabelProvider(-10l);
 
     LABELER.initEventCount(5);
