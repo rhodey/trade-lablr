@@ -31,6 +31,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.Callable;
+import java.util.stream.Collectors;
 
 public class Labeler implements Callable<Integer> {
 
@@ -71,14 +72,14 @@ public class Labeler implements Callable<Integer> {
 
   private int label(ProtoReader reader, ProtoWriter protoWriter, CsvWriter csvWriter) throws IOException {
     int eventIndex = 0;
-    List<Label> labels = new LinkedList<>();
+    List<Optional<Label>> labels = new LinkedList<>();
     Optional<OrderEvent> event = reader.readNext();
 
     csvWriter.writeHeader(labelers);
 
     while (event.isPresent()) {
-      for (LabelProvider labeler : labelers) { labels.add(labeler.labelFor(eventIndex).get()); }
-      protoWriter.writeLabeledEvent(event.get(), labels);
+      for (LabelProvider labeler : labelers) { labels.add(labeler.labelFor(eventIndex)); }
+      protoWriter.writeLabeledEvent(event.get(), labels.stream().filter(Optional::isPresent).map(Optional::get).collect(Collectors.toList()));
       csvWriter.writeLabeledEvent(event.get(), labels);
       eventIndex++;
       labels.clear();

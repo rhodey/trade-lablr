@@ -27,6 +27,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 public class CsvWriter implements Closeable {
 
@@ -55,7 +56,7 @@ public class CsvWriter implements Closeable {
     output.write(builder.toString());
   }
 
-  public void writeLabeledEvent(OrderEvent event, List<Label> labels) throws IOException {
+  public void writeLabeledEvent(OrderEvent event, List<Optional<Label>> labels) throws IOException {
     StringBuilder builder = new StringBuilder();
 
     builder.append(event.getType().name());
@@ -74,7 +75,11 @@ public class CsvWriter implements Closeable {
 
     labels.forEach(label -> {
       builder.append(",");
-      builder.append(label.getValue() != -1l ? caster.toDouble(label.getValue()) : -1l);
+      if (label.isPresent()) {
+        builder.append(caster.toDouble(label.get().getValue()));
+      } else {
+        builder.append("NULL");
+      }
     });
 
     builder.append("\n");
