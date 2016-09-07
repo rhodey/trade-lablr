@@ -38,7 +38,7 @@ public class PriceDiffLabelProvider extends LabelProvider {
   @Override
   public Optional<Long> labelValueFor(int eventIndex) {
     if (valueHistory[eventIndex] <= 0l) { return Optional.empty(); }
-    long last  = -1l;
+    long last  = valueHistory[eventIndex];
     int  index = eventIndex;
 
     if (periodMs > 0l) {
@@ -47,14 +47,14 @@ public class PriceDiffLabelProvider extends LabelProvider {
         last   = (valueHistory[index] > 0l) ? valueHistory[index] : last;
         index += 1;
       }
-      return (last > 0l) ? Optional.of(last - valueHistory[eventIndex]) : Optional.empty();
+      return Optional.of(last - valueHistory[eventIndex]);
     } else {
       index--;
       while (index >= 0 && (times[eventIndex] - times[index]) < Math.abs(periodMs)) {
         last   = (valueHistory[index] > 0l) ? valueHistory[index] : last;
         index -= 1;
       }
-      return (last > 0l) ? Optional.of(valueHistory[eventIndex] - last) : Optional.empty();
+      return Optional.of(valueHistory[eventIndex] - last);
     }
   }
 

@@ -46,7 +46,7 @@ public class PriceDiffLabelProviderTest {
     assert !LABELER.labelFor(1).isPresent();
     assert LABELER.labelFor(2).get().getValue() == 31204l;
     assert LABELER.labelFor(3).get().getValue() == 30000l;
-    assert !LABELER.labelFor(4).isPresent();
+    assert LABELER.labelFor(4).get().getValue() ==     0l;
   }
 
   @Test
@@ -60,11 +60,11 @@ public class PriceDiffLabelProviderTest {
     LABELER.indexEvent(3, mockTake(39l,  1337l));
     LABELER.indexEvent(4, mockTake(49l, 31337l));
 
-    assert !LABELER.labelFor(0).isPresent();
+    assert LABELER.labelFor(0).get().getValue() ==    0l;
     assert !LABELER.labelFor(1).isPresent();
-    assert !LABELER.labelFor(2).isPresent();
+    assert LABELER.labelFor(2).get().getValue() ==    0l;
     assert LABELER.labelFor(3).get().getValue() == 1204l;
-    assert !LABELER.labelFor(4).isPresent();
+    assert LABELER.labelFor(4).get().getValue() ==    0l;
   }
 
 }
