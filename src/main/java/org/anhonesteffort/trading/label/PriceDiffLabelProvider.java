@@ -37,16 +37,17 @@ public class PriceDiffLabelProvider extends LabelProvider {
   public long labelValueFor(int eventIndex) {
     if (valueHistory[eventIndex] <= 0l) { return -1l; }
     long last  = -1l;
+    int  index = eventIndex;
 
     if (periodMs > 0l) {
-      int index = eventIndex + 1;
+      index++;
       while (index < times.length && (times[index] - times[eventIndex]) < periodMs) {
         last   = (valueHistory[index] > 0l) ? valueHistory[index] : last;
         index += 1;
       }
       return (last > 0l) ? (last - valueHistory[eventIndex]) : -1l;
     } else {
-      int index = eventIndex - 1;
+      index--;
       while (index >= 0 && (times[eventIndex] - times[index]) < Math.abs(periodMs)) {
         last   = (valueHistory[index] > 0l) ? valueHistory[index] : last;
         index -= 1;

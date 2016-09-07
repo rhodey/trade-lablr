@@ -38,14 +38,14 @@ public class PriceLabelProvider extends LabelProvider {
     long last  = -1l;
     int  index = eventIndex;
 
-    if (periodMs > 0) {
+    if (periodMs > 0l) {
       while (index < times.length && (times[index] - times[eventIndex]) < periodMs) {
-        last   = (valueHistory[index] > 0) ? valueHistory[index] : last;
+        last   = (valueHistory[index] > 0l) ? valueHistory[index] : last;
         index += 1;
       }
     } else {
       while (index >= 0 && (times[eventIndex] - times[index]) < Math.abs(periodMs)) {
-        last   = (valueHistory[index] > 0) ? valueHistory[index] : last;
+        last   = (valueHistory[index] > 0l) ? valueHistory[index] : last;
         index -= 1;
       }
     }
